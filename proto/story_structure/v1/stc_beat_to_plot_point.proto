@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package story_structure.v1;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/a-novel/proto/gen/go/story_structure/v1;storystructurepb";
+
+service BeatToPlotPointService {
+  // Retrieve the ids of the beats related to a plot point.
+  rpc ListBeatsByPlotPoint(ListBeatsByPlotPointRequest) returns (ListBeatsByPlotPointResponse) {}
+  // Retrieve the ids of the plot points related to a beat.
+  rpc ListPlotPointsByBeats(ListPlotPointsByBeatsRequest) returns (ListPlotPointsByBeatsResponse) {}
+
+  // Link a beat to a plot point.
+  rpc LinkBeatAndPlotPoint(LinkBeatAndPlotPointRequest) returns (google.protobuf.Empty) {}
+  // Unlink a beat from a plot point.
+  rpc UnlinkBeatAndPlotPoint(UnlinkBeatAndPlotPointRequest) returns (google.protobuf.Empty) {}
+}
+
+// ================================================================================
+// REQUESTS
+// ================================================================================
+
+message ListBeatsByPlotPointRequest {
+  // The id of the plot point to retrieve the beats from.
+  string plot_point_id = 1;
+}
+
+message ListPlotPointsByBeatsRequest {
+  // The id of the beat to retrieve the plot points from.
+  string beat_id = 1;
+}
+
+message LinkBeatAndPlotPointRequest {
+  // The id of the beat to link to the plot point.
+  string beat_id = 1;
+  // The id of the plot point to link the beat to.
+  string plot_point_id = 2;
+}
+
+message UnlinkBeatAndPlotPointRequest {
+  // The id of the beat to unlink from the plot point.
+  string beat_id = 1;
+  // The id of the plot point to unlink the beat from.
+  string plot_point_id = 2;
+}
+
+// ================================================================================
+// RESPONSES
+// ================================================================================
+
+message ListBeatsByPlotPointResponse {
+  // The ids of the beats related to the plot point.
+  repeated string beat_ids = 1;
+}
+
+message ListPlotPointsByBeatsResponse {
+  // The ids of the plot points the beat is linked to.
+  repeated string plot_point_ids = 1;
+}

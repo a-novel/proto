@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+package story_structure.v1;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/a-novel/proto/gen/go/story_structure/v1;storystructurepb";
+
+service BeatService {
+  // Get a specific beat details.
+  rpc GetBeat(GetBeatRequest) returns (GetBeatResponse) {}
+  // Return a list of beats, based on a list of IDs provided.
+  rpc ListBeats(ListBeatsRequest) returns (ListBeatsResponse) {}
+  // Return a list of beat ids, based on a search query. You can then use ListBeats to retrieve
+  // the specific details of each beat.
+  rpc SearchBeats(SearchBeatsRequest) returns (SearchBeatsResponse) {}
+
+  // Create a new beat.
+  rpc CreateBeat(CreateBeatRequest) returns (CreateBeatResponse) {}
+  // Update an existing beat.
+  rpc UpdateBeat(UpdateBeatRequest) returns (UpdateBeatResponse) {}
+  // Delete an existing beat. This method should not fail if the beat does not exist.
+  rpc DeleteBeat(DeleteBeatRequest) returns (google.protobuf.Empty) {}
+}
+
+// ================================================================================
+// REQUESTS
+// ================================================================================
+
+message GetBeatRequest {
+  // The id of the beat to retrieve.
+  string id = 1;
+}
+
+message ListBeatsRequest {
+  // The ids of the beats to retrieve. A maximum number of ids that can be provided in one request may be
+  // defined by the server.
+  repeated string ids = 1;
+}
+
+message SearchBeatsRequest {
+  // Batch size for the search. The server may cap this value.
+  int32 limit = 1;
+  // Offset for the search. The server may cap this value.
+  int32 offset = 2;
+}
+
+message CreateBeatRequest {
+  // The name of the beat to create. While not required to be unique, it is recommended to be, so it is not
+  // confused with other beats.
+  string name = 1;
+  // The main prompt that should be used to generate a story with this beat.
+  string prompt = 2;
+}
+
+message UpdateBeatRequest {
+  // The ID of the existing beat to update.
+  string id = 1;
+  // The name of the beat to create. While not required to be unique, it is recommended to be, so it is not
+  // confused with other beats.
+  string name = 2;
+  // The main prompt that should be used to generate a story with this beat.
+  string prompt = 3;
+}
+
+message DeleteBeatRequest {
+  // The ID of the beat to delete.
+  string id = 1;
+}
+
+// ================================================================================
+// RESPONSES
+// ================================================================================
+
+message GetBeatResponse {
+  // The beat that was retrieved.
+  Beat beat = 1;
+}
+
+message ListBeatsResponse {
+  // The beats that were retrieved.
+  repeated Beat beats = 1;
+}
+
+message SearchBeatsResponse {
+  // The ids of the beats matching the search. Details for each beat can be retrieved using ListBeats,
+  // or separately using GetBeat.
+  repeated string ids = 1;
+}
+
+message CreateBeatResponse {
+  // The beat that was created.
+  Beat beat = 1;
+}
+
+message UpdateBeatResponse {
+  // The beat that was updated.
+  Beat beat = 1;
+}
+
+// ================================================================================
+// GENERIC
+// ================================================================================
+
+message Beat {
+  // The unique identifier of the beat.
+  string id = 1;
+  // THe display name of the beat.
+  string name = 2;
+  // The prompt that should be used to generate a story with this beat.
+  string prompt = 3;
+}
