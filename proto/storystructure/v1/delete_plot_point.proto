@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package storystructure.v1;
+
+import "google/protobuf/empty.proto";
+
+service DeletePlotPointService {
+  rpc Exec(DeletePlotPointServiceExecRequest) returns (google.protobuf.Empty) {}
+}
+
+message DeletePlotPointServiceExecRequest {
+  // The id of the plot point to delete.
+  string id = 1;
+}

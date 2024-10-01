@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package storystructure.v1;
+
+import "google/protobuf/empty.proto";
+
+service DeleteBeatService {
+  rpc Exec(DeleteBeatServiceExecRequest) returns (google.protobuf.Empty) {}
+}
+
+message DeleteBeatServiceExecRequest {
+  // The id of the beat to delete.
+  string id = 1;
+}

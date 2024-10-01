@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package storystructure.v1;
+
+import "google/protobuf/empty.proto";
+
+service BatchDeleteBeatsService {
+  rpc Exec(BatchDeleteBeatsServiceExecRequest) returns (google.protobuf.Empty) {}
+}
+
+message BatchDeleteBeatsServiceExecRequest {
+  // The ids of the beats to delete.
+  repeated string ids = 1;
+}

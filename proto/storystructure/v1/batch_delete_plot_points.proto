@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package storystructure.v1;
+
+import "google/protobuf/empty.proto";
+
+service BatchDeletePlotPointsService {
+  rpc Exec(BatchDeletePlotPointsServiceExecRequest) returns (google.protobuf.Empty) {}
+}
+
+message BatchDeletePlotPointsServiceExecRequest {
+  // The ids of the plot points to delete.
+  repeated string ids = 1;
+}

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package storystructure.v1;
+
+import "google/protobuf/timestamp.proto";
+
+service ListBeatsService {
+  rpc Exec(ListBeatsServiceExecRequest) returns (ListBeatsServiceExecResponse) {}
+}
+
+message ListBeatsServiceExecRequest {
+  // The ids of the beats to retrieve. A request should set a maximum count of acceptable ids, to prevent saturating
+  // the server.
+  repeated string ids = 1;
+}
+
+message ListBeatsServiceExecResponseElement {
+  // The unique identifier of the beat.
+  string id = 1;
+  // The human-readable name of the beat to create.
+  string name = 2;
+  // A sub-prompt prompt that should be used to generate a story with this beat.
+  string prompt = 3;
+  // The timestamp of the beat creation.
+  google.protobuf.Timestamp created_at = 4;
+  // The timestamp of the beat latest update.
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message ListBeatsServiceExecResponse {
+  // The beats that were retrieved.
+  repeated ListBeatsServiceExecResponseElement beats = 1;
+}

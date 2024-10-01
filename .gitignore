@@ -1,0 +1,5 @@
+.idea
+node_modules
+
+# Generated files
+*_sdk/

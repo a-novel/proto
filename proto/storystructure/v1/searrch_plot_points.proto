@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package storystructure.v1;
+
+import "common/v1/pagination.proto";
+
+service SearchPlotPointsService {
+  rpc Exec(SearchPlotPointsServiceExecRequest) returns (SearchPlotPointsServiceExecResponse) {}
+}
+
+enum SortPlotPoints {
+  SORT_PLOT_POINTS_UNSPECIFIED = 0;
+  SORT_PLOT_POINTS_BY_NAME = 1;
+  SORT_PLOT_POINTS_BY_CREATED_AT = 2;
+  SORT_PLOT_POINTS_BY_UPDATED_AT = 3;
+}
+
+message SearchPlotPointsServiceExecRequest {
+  // Pagination parameters for the search.
+  common.v1.Pagination pagination = 1;
+  // Sort the plot points.
+  SortPlotPoints order_by = 3;
+  // The direction of the sorting.
+  common.v1.SortDirection order_direction = 4;
+}
+
+message SearchPlotPointsServiceExecResponse {
+  // The ids of the plot points matching the search. Details for each plot point can be retrieved using ListPlotPoints,
+  // or separately using GetPlotPoint.
+  repeated string ids = 1;
+}

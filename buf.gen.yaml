@@ -1,0 +1,15 @@
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: buf.build/a-novel/proto/go_sdk
+  # Remove `disable` field if googleapis is not used
+  disable:
+    - module: buf.build/googleapis/googleapis
+      file_option: go_package_prefix
+plugins:
+  - remote: buf.build/protocolbuffers/go:v1.35.1
+    out: go_sdk
+    opt:
+      - paths=source_relative

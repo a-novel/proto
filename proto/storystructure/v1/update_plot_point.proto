@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package storystructure.v1;
+
+import "google/protobuf/timestamp.proto";
+
+service UpdatePlotPointService {
+  rpc Exec(UpdatePlotPointServiceExecRequest) returns (UpdatePlotPointServiceExecResponse) {}
+}
+
+message UpdatePlotPointServiceExecRequest {
+  // The id of the plot point to update.
+  string id = 1;
+  // The name of the plot point to update. While it does not require to be unique, this is recommended, so it is not
+  // confused with different plot points.
+  string name = 2;
+  // A sub-prompt prompt that should be used to generate a story with this plot point.
+  string prompt = 3;
+}
+
+message UpdatePlotPointServiceExecResponse {
+  // The unique identifier of the plot point.
+  string id = 1;
+  // The human-readable name of the plot point to create.
+  string name = 2;
+  // A sub-prompt prompt that should be used to generate a story with this plot point.
+  string prompt = 3;
+  // The timestamp of the plot point creation.
+  google.protobuf.Timestamp created_at = 4;
+  // The timestamp of the plot point latest update.
+  google.protobuf.Timestamp updated_at = 5;
+}
