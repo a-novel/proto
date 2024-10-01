@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option go_package = "proto-go/story-structure;storystructurepb";
+
+package structure;
+
+service BeatToBeatsGroupService {
+  // Retrieve the ids of the beats related to a given beats group.
+  rpc GetBeatsGroupBeats(GetBeatsGroupBeatsRequest) returns (GetBeatsGroupBeatsResponse) {}
+  // Retrieve the list of groups a beat is linked to.
+  rpc GetBeatBeatsGroups(GetBeatBeatsGroupsRequest) returns (GetBeatBeatsGroupsResponse) {}
+
+  // Link a beat to a beats group.
+  rpc LinkBeatToBeatsGroup(LinkBeatToBeatsGroupRequest) returns (google.protobuf.Empty) {}
+  // Unlink a beat from a beats group.
+  rpc UnlinkBeatFromBeatsGroup(UnlinkBeatFromBeatsGroupRequest) returns (google.protobuf.Empty) {}
+}
+
+// ================================================================================
+// REQUESTS
+// ================================================================================
+
+message GetBeatsGroupBeatsRequest {
+  // The id of the beats group to retrieve the beats from.
+  string beats_group_id = 1;
+}
+
+message GetBeatBeatsGroupsRequest {
+  // The id of the beat to retrieve the groups from.
+  string beat_id = 1;
+}
+
+message LinkBeatToBeatsGroupRequest {
+  // The id of the beat to link to the beats group.
+  string beat_id = 1;
+  // The id of the beats group to link the beat to.
+  string beats_group_id = 2;
+}
+
+message UnlinkBeatFromBeatsGroupRequest {
+  // The id of the beat to unlink from the beats group.
+  string beat_id = 1;
+  // The id of the beats group to unlink the beat from.
+  string beats_group_id = 2;
+}
+
+// ================================================================================
+// RESPONSES
+// ================================================================================
+
+message GetBeatsGroupBeatsResponse {
+  // The ids of the beats related to the beats group.
+  repeated string beat_ids = 1;
+}
+
+message GetBeatBeatsGroupsResponse {
+  // The ids of the groups the beat is linked to.
+  repeated string beats_group_ids = 1;
+}

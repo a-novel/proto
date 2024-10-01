@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option go_package = "proto-go/story-structure;storystructurepb";
+
+package structure;
+
+service BeatToPlotPointService {
+  // Retrieve the ids of the beats related to a plot point.
+  rpc GetPlotPointBeats(GetPlotPointBeatsRequest) returns (GetPlotPointBeatsResponse) {}
+  // Retrieve the ids of the plot points related to a beat.
+  rpc GetBeatPlotPoints(GetBeatPlotPointsRequest) returns (GetBeatPlotPointsResponse) {}
+
+  // Link a beat to a plot point.
+  rpc LinkPlotPointToBeat(LinkPlotPointToBeatRequest) returns (google.protobuf.Empty) {}
+  // Unlink a beat from a plot point.
+  rpc UnlinkPlotPointFromBeat(UnlinkPlotPointFromBeatRequest) returns (google.protobuf.Empty) {}
+}
+
+// ================================================================================
+// REQUESTS
+// ================================================================================
+
+message GetPlotPointBeatsRequest {
+  // The id of the plot point to retrieve the beats from.
+  string plot_point_id = 1;
+}
+
+message GetBeatPlotPointsRequest {
+  // The id of the beat to retrieve the plot points from.
+  string beat_id = 1;
+}
+
+message LinkPlotPointToBeatRequest {
+  // The id of the beat to link to the plot point.
+  string beat_id = 1;
+  // The id of the plot point to link the beat to.
+  string plot_point_id = 2;
+}
+
+message UnlinkPlotPointFromBeatRequest {
+  // The id of the beat to unlink from the plot point.
+  string beat_id = 1;
+  // The id of the plot point to unlink the beat from.
+  string plot_point_id = 2;
+}
+
+// ================================================================================
+// RESPONSES
+// ================================================================================
+
+message GetPlotPointBeatsResponse {
+  // The ids of the beats related to the plot point.
+  repeated string beat_ids = 1;
+}
+
+message GetBeatPlotPointsResponse {
+  // The ids of the plot points the beat is linked to.
+  repeated string plot_point_ids = 1;
+}

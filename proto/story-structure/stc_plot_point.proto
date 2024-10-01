@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option go_package = "proto-go/story-structure;storystructurepb";
+
+package structure;
+
+service PlotPointService {
+  // Get a specific plot point details.
+  rpc GetPlotPoint(GetPlotPointRequest) returns (PlotPoint) {}
+  // Return a list of plot points, based on a list of IDs provided.
+  rpc ListPlotPoints(ListPlotPointsRequest) returns (ListPlotPointsResponse) {}
+  // Return a list of plot points ids, based on a search query. You can then use ListPlotPoints to retrieve
+  // the specific details of each plot point.
+  rpc SearchPlotPoints(SearchPlotPointsRequest) returns (SearchPlotPointsResponse) {}
+
+  // Create a new plot point.
+  rpc CreatePlotPoint(CreatePlotPointRequest) returns (PlotPoint) {}
+  // Update an existing plot point.
+  rpc UpdatePlotPoint(UpdatePlotPointRequest) returns (PlotPoint) {}
+  // Delete an existing plot point. This method should not fail if the plot point does not exist.
+  rpc DeletePlotPoint(DeletePlotPointRequest) returns (google.protobuf.Empty) {}
+}
+
+// ================================================================================
+// REQUESTS
+// ================================================================================
+
+message GetPlotPointRequest {
+  // The id of the plot point to retrieve.
+  string id = 1;
+}
+
+message ListPlotPointsRequest {
+  // The ids of the plot points to retrieve. A maximum number of ids that can be provided in one request may be
+  // defined by the server.
+  repeated string ids = 1;
+}
+
+message SearchPlotPointsRequest {
+  // Batch size for the search. The server may cap this value.
+  int32 limit = 1;
+  // Offset for the search. The server may cap this value.
+  int32 offset = 2;
+}
+
+message CreatePlotPointRequest {
+  // The name of the plot point to create. While not required to be unique, it is recommended to be, so it is not
+  // confused with other plot points.
+  string name = 1;
+  // The main prompt that should be used to generate a story with this plot point.
+  string prompt = 2;
+}
+
+message UpdatePlotPointRequest {
+  // The ID of the existing plot point to update.
+  string id = 1;
+  // The name of the plot point to create. While not required to be unique, it is recommended to be, so it is not
+  // confused with other plot points.
+  string name = 2;
+  // The main prompt that should be used to generate a story with this plot point.
+  string prompt = 3;
+}
+
+message DeletePlotPointRequest {
+  // The ID of the plot point to delete.
+  string id = 1;
+}
+
+// ================================================================================
+// RESPONSES
+// ================================================================================
+
+message ListPlotPointsResponse {
+  // A list of plot points, that matches the provided IDs. The number of returned plot points may be less than the
+  // number of provided IDs, if some of them are incorrect / don't point to an existing plot point.
+  repeated PlotPoint plot_points = 1;
+}
+
+message SearchPlotPointsResponse {
+  // The ids of the plot points matching the search. Details for each plot point can be retrieved using ListPlotPoints,
+  // or separately using GetPlotPoint.
+  repeated string plot_points_ids = 1;
+}
+
+// ================================================================================
+// GENERIC
+// ================================================================================
+
+message PlotPoint {
+  // The unique identifier of the plot point.
+  string id = 1;
+  // The display name of the plot point. It is not required to be unique.
+  string name = 2;
+  // The main prompt that should be used to generate a story with this plot point.
+  string prompt = 3;
+}
