@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+package story_structure.v1;
+
+import "common/v1/pagination.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+service PlotPointService {
+  // Get a specific plot point details.
+  rpc GetPlotPoint(GetPlotPointRequest) returns (GetPlotPointResponse) {}
+  // Return a list of plot points, based on a list of IDs provided.
+  rpc ListPlotPoints(ListPlotPointsRequest) returns (ListPlotPointsResponse) {}
+  // Return a list of plot points ids, based on a search query. You can then use ListPlotPoints to retrieve
+  // the specific details of each plot point.
+  rpc SearchPlotPoints(SearchPlotPointsRequest) returns (SearchPlotPointsResponse) {}
+
+  // Create a new plot point.
+  rpc CreatePlotPoint(CreatePlotPointRequest) returns (CreatePlotPointResponse) {}
+  // Update an existing plot point.
+  rpc UpdatePlotPoint(UpdatePlotPointRequest) returns (UpdatePlotPointResponse) {}
+  // Delete an existing plot point. This method should not fail if the plot point does not exist.
+  rpc DeletePlotPoint(DeletePlotPointRequest) returns (google.protobuf.Empty) {}
+}
+
+// ================================================================================
+// REQUESTS
+// ================================================================================
+
+enum SortPlotPoints {
+  SORT_PLOT_POINTS_UNSPECIFIED = 0;
+  SORT_PLOT_POINTS_BY_NAME = 1;
+  SORT_PLOT_POINTS_BY_CREATED_AT = 2;
+  SORT_PLOT_POINTS_BY_UPDATED_AT = 3;
+}
+
+message GetPlotPointRequest {
+  // The id of the plot point to retrieve.
+  string id = 1;
+}
+
+message ListPlotPointsRequest {
+  // The ids of the plot points to retrieve. A maximum number of ids that can be provided in one request may be
+  // defined by the server.
+  repeated string ids = 1;
+}
+
+message SearchPlotPointsRequest {
+  // Pagination parameters for the search.
+  common.v1.Pagination pagination = 1;
+  // Filter by beats.
+  repeated string beats_ids = 2;
+  // Sort the plot points.
+  SortPlotPoints orderBy = 3;
+  // The direction of the sorting.
+  common.v1.SortDirection orderDirection = 4;
+}
+
+message CreatePlotPointRequest {
+  // The name of the plot point to create. While not required to be unique, it is recommended to be, so it is not
+  // confused with other plot points.
+  string name = 1;
+  // The main prompt that should be used to generate a story with this plot point.
+  string prompt = 2;
+}
+
+message UpdatePlotPointRequest {
+  // The ID of the existing plot point to update.
+  string id = 1;
+  // The name of the plot point to create. While not required to be unique, it is recommended to be, so it is not
+  // confused with other plot points.
+  string name = 2;
+  // The main prompt that should be used to generate a story with this plot point.
+  string prompt = 3;
+}
+
+message DeletePlotPointRequest {
+  // The ID of the plot point to delete.
+  string id = 1;
+}
+
+// ================================================================================
+// RESPONSES
+// ================================================================================
+
+message GetPlotPointResponse {
+  // The plot point that was retrieved.
+  PlotPoint plot_point = 1;
+}
+
+message ListPlotPointsResponse {
+  // A list of plot points, that matches the provided IDs. The number of returned plot points may be less than the
+  // number of provided IDs, if some of them are incorrect / don't point to an existing plot point.
+  repeated PlotPoint plot_points = 1;
+}
+
+message SearchPlotPointsResponse {
+  // The ids of the plot points matching the search. Details for each plot point can be retrieved using ListPlotPoints,
+  // or separately using GetPlotPoint.
+  repeated string plot_points_ids = 1;
+}
+
+message CreatePlotPointResponse {
+  // The id of the newly created plot point.
+  string id = 1;
+  // The timestamp of the plot point creation.
+  google.protobuf.Timestamp created_at = 2;
+}
+
+message UpdatePlotPointResponse {
+  // The id of the updated plot point.
+  string id = 1;
+  // The timestamp of the plot point latest update.
+  google.protobuf.Timestamp updated_at = 2;
+}
+
+// ================================================================================
+// GENERIC
+// ================================================================================
+
+message PlotPoint {
+  // The unique identifier of the plot point.
+  string id = 1;
+  // The display name of the plot point. It is not required to be unique.
+  string name = 2;
+  // The main prompt that should be used to generate a story with this plot point.
+  string prompt = 3;
+  // The timestamp of the plot point creation.
+  google.protobuf.Timestamp created_at = 4;
+  // The timestamp of the plot point latest update.
+  google.protobuf.Timestamp updated_at = 5;
+}

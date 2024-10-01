@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package story_structure.v1;
+
+import "google/protobuf/empty.proto";
+
+service BeatToPlotPointService {
+  // Link a beat to a plot point.
+  rpc LinkBeatAndPlotPoint(LinkBeatAndPlotPointRequest) returns (google.protobuf.Empty) {}
+  // Unlink a beat from a plot point.
+  rpc UnlinkBeatAndPlotPoint(UnlinkBeatAndPlotPointRequest) returns (google.protobuf.Empty) {}
+}
+
+// ================================================================================
+// REQUESTS
+// ================================================================================
+
+message LinkBeatAndPlotPointRequest {
+  // The id of the beat to link to the plot point.
+  string beat_id = 1;
+  // The id of the plot point to link the beat to.
+  string plot_point_id = 2;
+}
+
+message UnlinkBeatAndPlotPointRequest {
+  // The id of the beat to unlink from the plot point.
+  string beat_id = 1;
+  // The id of the plot point to unlink the beat from.
+  string plot_point_id = 2;
+}

@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+package story_structure.v1;
+
+import "common/v1/pagination.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// Interact with story beats. A story beat is a specific sub-instruction used to shape a plot point. Mixing different
+// beats together gives the flavor to a particular generation.
+service BeatService {
+  // Get a specific beat details.
+  rpc GetBeat(GetBeatRequest) returns (GetBeatResponse) {}
+  // Return a list of beats, associated to a provided list of ids.
+  rpc ListBeats(ListBeatsRequest) returns (ListBeatsResponse) {}
+  // Return a list of beat ids, based on a search query. You can then use ListBeats to retrieve
+  // the specific details of each beat.
+  rpc SearchBeats(SearchBeatsRequest) returns (SearchBeatsResponse) {}
+
+  // Create a new beat.
+  rpc CreateBeat(CreateBeatRequest) returns (CreateBeatResponse) {}
+  // Update an existing beat.
+  rpc UpdateBeat(UpdateBeatRequest) returns (UpdateBeatResponse) {}
+  // Delete an existing beat. This method should not fail if the beat does not exist.
+  rpc DeleteBeat(DeleteBeatRequest) returns (google.protobuf.Empty) {}
+}
+
+// ================================================================================
+// REQUESTS
+// ================================================================================
+
+enum SortBeats {
+  SORT_BEATS_UNSPECIFIED = 0;
+  SORT_BEATS_BY_NAME = 1;
+  SORT_BEATS_BY_CREATED_AT = 2;
+  SORT_BEATS_BY_UPDATED_AT = 3;
+}
+
+message GetBeatRequest {
+  // The id of the beat to retrieve.
+  string id = 1;
+}
+
+message ListBeatsRequest {
+  // The ids of the beats to retrieve. A request should set a maximum count of acceptable ids, to prevent saturating
+  // the server.
+  repeated string ids = 1;
+}
+
+message SearchBeatsRequest {
+  // Pagination parameters for the search.
+  common.v1.Pagination pagination = 1;
+  // Filter by plot points.
+  repeated string plot_point_ids = 2;
+  // Sort the beats.
+  SortBeats orderBy = 3;
+  // The direction of the sorting.
+  common.v1.SortDirection orderDirection = 4;
+}
+
+message CreateBeatRequest {
+  // The name of the beat to create. While it does not require to be unique, this is recommended, so it is not
+  // confused with different beats.
+  string name = 1;
+  // A sub-prompt prompt that should be used to generate a story with this beat.
+  string prompt = 2;
+}
+
+message UpdateBeatRequest {
+  // The id of the existing beat to update.
+  string id = 1;
+  // The human-readable name of the beat to create. While it does not require to be unique, this is recommended, so it
+  // is not confused with different beats.
+  string name = 2;
+  // A sub-prompt prompt that should be used to generate a story with this beat.
+  string prompt = 3;
+}
+
+message DeleteBeatRequest {
+  // The id of the beat to delete.
+  string id = 1;
+}
+
+// ================================================================================
+// RESPONSES
+// ================================================================================
+
+message GetBeatResponse {
+  // The beat that was retrieved.
+  Beat beat = 1;
+}
+
+message ListBeatsResponse {
+  // The beats that were retrieved.
+  repeated Beat beats = 1;
+}
+
+message SearchBeatsResponse {
+  // The ids of the beats matching the search. Details for each beat can be retrieved using ListBeats,
+  // or separately using GetBeat.
+  repeated string ids = 1;
+}
+
+message CreateBeatResponse {
+  // The beat that was created.
+  Beat beat = 1;
+  // The timestamp of the beat creation.
+  google.protobuf.Timestamp created_at = 2;
+}
+
+message UpdateBeatResponse {
+  // The beat that was updated.
+  Beat beat = 1;
+  // The timestamp of the beat latest update.
+  google.protobuf.Timestamp updated_at = 2;
+}
+
+// ================================================================================
+// GENERIC
+// ================================================================================
+
+message Beat {
+  // The unique identifier of the beat.
+  string id = 1;
+  // The human-readable name of the beat to create. While it does not require to be unique, this is recommended, so it
+  // is not confused with different beats.
+  string name = 2;
+  // A sub-prompt prompt that should be used to generate a story with this beat.
+  string prompt = 3;
+  // The timestamp of the beat creation.
+  google.protobuf.Timestamp created_at = 4;
+  // The timestamp of the beat latest update.
+  google.protobuf.Timestamp updated_at = 5;
+}
