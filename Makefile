@@ -1,18 +1,26 @@
-proto-go:
-	protoc \
-		--go_out=. --go_opt=paths=import \
-        --go-grpc_out=. --go-grpc_opt=paths=import \
-        proto/*/*.proto
+proto:
+	npx buf generate
+
+update-go:
+	go get -u ./... && go mod tidy
+
+update: update-go
+	npx npm-check-updates
+	npm i
 
 install-go:
-	cd proto-go && \
-		go get google.golang.org/protobuf/cmd/protoc-gen-go google.golang.org/grpc/cmd/protoc-gen-go-grpc && \
-		go install google.golang.org/protobuf/cmd/protoc-gen-go && \
-		go install google.golang.org/grpc/cmd/protoc-gen-go-grpc && \
-		go mod tidy
+	go get ./... && go mod tidy
 
 install: install-go
+	npm i
 
-proto: proto-go
+breaking:
+	npx buf breaking --against ".git#branch=master"
 
-.PHONY: proto-go install-go install proto
+lint:
+	npx buf lint
+
+format:
+	npx buf format -w
+
+.PHONY: proto update-go update install-go install

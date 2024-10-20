@@ -1,0 +1,15 @@
+# For details on buf.yaml configuration, visit https://buf.build/docs/configuration/v2/buf-yaml
+version: v2
+clean: true
+plugins:
+  - remote: buf.build/protocolbuffers/go
+    out: gen/go
+    opt: paths=source_relative
+  - local: protoc-gen-es
+    opt: target=ts
+    out: gen/es
+  - local: protoc-gen-es
+    opt: target=js+dts
+    out: gen/js
+inputs:
+  - directory: proto
