@@ -48,3 +48,9 @@ Update dependencies for generated packages
 ```bash
 make update
 ```
+
+Make sure proto file are properly formatted
+
+```bash
+make format
+```
