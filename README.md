@@ -37,12 +37,6 @@ make install
 
 ### Maintenance
 
-Generate updated definitions
-
-```bash
-make proto
-```
-
 Update dependencies for generated packages
 
 ```bash

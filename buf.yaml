@@ -1,6 +1,7 @@
 version: v2
 modules:
   - path: proto
+    name: buf.build/a-novel/proto
 breaking:
   use:
     - FILE
