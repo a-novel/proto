@@ -4,14 +4,14 @@ proto:
 update-go:
 	go get -u ./... && go mod tidy
 
-update: update-go
+update:
 	npx npm-check-updates
 	npm i
 
 install-go:
 	go get ./... && go mod tidy
 
-install: install-go
+install:
 	npm i
 
 breaking:
