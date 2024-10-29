@@ -11,4 +11,6 @@ service DeletePlotPointService {
 message DeletePlotPointServiceExecRequest {
   // The id of the plot point to delete.
   string id = 1;
+  // Optional. If present, the plot point will only be deleted if it belongs to this creator.
+  string creator_id = 2;
 }
