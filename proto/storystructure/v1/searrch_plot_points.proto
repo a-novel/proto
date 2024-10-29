@@ -22,6 +22,8 @@ message SearchPlotPointsServiceExecRequest {
   SortPlotPoints order_by = 3;
   // The direction of the sorting.
   common.v1.SortDirection order_direction = 4;
+  // Filter by creator ids.
+  repeated string creator_ids = 5;
 }
 
 message SearchPlotPointsServiceExecResponse {
