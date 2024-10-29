@@ -24,4 +24,6 @@ message GetBeatServiceExecResponse {
   google.protobuf.Timestamp created_at = 4;
   // The timestamp of the beat latest update.
   google.protobuf.Timestamp updated_at = 5;
+  // The unique identifier of the user that created the beat.
+  string creator_id = 6;
 }

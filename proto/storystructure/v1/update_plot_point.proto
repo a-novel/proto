@@ -16,6 +16,8 @@ message UpdatePlotPointServiceExecRequest {
   string name = 2;
   // A sub-prompt prompt that should be used to generate a story with this plot point.
   string prompt = 3;
+  // The unique identifier of the user that created the plot point.
+  string creator_id = 4;
 }
 
 message UpdatePlotPointServiceExecResponse {
@@ -29,4 +31,6 @@ message UpdatePlotPointServiceExecResponse {
   google.protobuf.Timestamp created_at = 4;
   // The timestamp of the plot point latest update.
   google.protobuf.Timestamp updated_at = 5;
+  // The unique identifier of the user that created the plot point.
+  string creator_id = 6;
 }

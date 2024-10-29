@@ -16,6 +16,8 @@ message UpdateBeatServiceExecRequest {
   string name = 2;
   // A sub-prompt prompt that should be used to generate a story with this beat.
   string prompt = 3;
+  // The unique identifier of the user that created the beat.
+  string creator_id = 4;
 }
 
 message UpdateBeatServiceExecResponse {
@@ -29,4 +31,6 @@ message UpdateBeatServiceExecResponse {
   google.protobuf.Timestamp created_at = 4;
   // The timestamp of the beat latest update.
   google.protobuf.Timestamp updated_at = 5;
+  // The unique identifier of the user that created the beat.
+  string creator_id = 6;
 }
