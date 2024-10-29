@@ -11,4 +11,6 @@ service BatchDeletePlotPointsService {
 message BatchDeletePlotPointsServiceExecRequest {
   // The ids of the plot points to delete.
   repeated string ids = 1;
+  // Optional. If present, only plot points belonging to that creator will be deleted.
+  string creator_id = 2;
 }

@@ -11,4 +11,6 @@ service BatchDeleteBeatsService {
 message BatchDeleteBeatsServiceExecRequest {
   // The ids of the beats to delete.
   repeated string ids = 1;
+  // Optional. If present, only beats belonging to that creator will be deleted.
+  string creator_id = 2;
 }

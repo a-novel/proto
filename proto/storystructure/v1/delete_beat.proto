@@ -11,4 +11,6 @@ service DeleteBeatService {
 message DeleteBeatServiceExecRequest {
   // The id of the beat to delete.
   string id = 1;
+  // Optional. If present, the beat will only be deleted if it belongs to this creator.
+  string creator_id = 2;
 }
