@@ -1,6 +1,3 @@
-proto:
-	npx buf generate
-
 update:
 	npx npm-check-updates
 	npm i
