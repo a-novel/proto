@@ -11,7 +11,6 @@ Get import instructions from [buf release](https://buf.build/a-novel/proto/sdks)
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/en)
-- [Go](https://go.dev/doc/install)
 - Make
   - macOS:
     ```bash

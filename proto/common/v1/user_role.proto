@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package common.v1;
+
+enum UserRole {
+  USER_ROLE_UNSPECIFIED = 0;
+  USER_ROLE_EARLY_ACCESS_PROGRAM = 1;
+  USER_ROLE_ADMIN = 2;
+  USER_ROLE_CORE = 3;
+}
