@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package passkeys.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+service UpdateService {
+  rpc Exec(UpdateServiceExecRequest) returns (UpdateServiceExecResponse) {}
+}
+
+message UpdateServiceExecRequest {
+  string id = 1;
+  string namespace = 2;
+  optional google.protobuf.Struct reward = 3;
+  optional google.protobuf.Duration expires_in = 4;
+}
+
+message UpdateServiceExecResponse {
+  string id = 1;
+  string namespace = 2;
+  optional google.protobuf.Struct reward = 3;
+  optional google.protobuf.Timestamp expires_at = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
