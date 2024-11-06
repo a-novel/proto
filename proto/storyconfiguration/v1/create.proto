@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package storyconfiguration.v1;
+
+import "google/protobuf/timestamp.proto";
+import "storyconfiguration/v1/common.proto";
+
+service CreateService {
+  rpc Exec(CreateServiceExecRequest) returns (CreateServiceExecResponse) {}
+}
+
+message CreateServiceExecRequest {
+  Configuration configuration = 1;
+}
+
+message CreateServiceExecResponse {
+  Configuration configuration = 1;
+
+  string id = 2;
+  google.protobuf.Timestamp created_at = 3;
+}
