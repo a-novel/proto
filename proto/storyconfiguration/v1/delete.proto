@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package storyconfiguration.v1;
+
+import "google/protobuf/empty.proto";
+
+service DeleteService {
+  rpc Exec(DeleteServiceExecRequest) returns (google.protobuf.Empty) {}
+}
+
+message DeleteServiceExecRequest {
+  // The id of the configuration to delete.
+  string id = 1;
+  // Optional. If present, the configuration will only be deleted if it belongs to this creator.
+  optional string creator_id = 2;
+}

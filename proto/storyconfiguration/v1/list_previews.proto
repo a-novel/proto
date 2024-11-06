@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package storyconfiguration.v1;
+
+import "google/protobuf/timestamp.proto";
+
+service ListPreviewsService {
+  rpc Exec(ListPreviewsServiceExecRequest) returns (ListPreviewsServiceExecResponse) {}
+}
+
+message ListPreviewsServiceExecRequest {
+  // The id of the configuration to get.
+  string id = 1;
+}
+
+message ListPreviewsServiceExecResponseElement {
+  string name = 1;
+  string creator_id = 2;
+  int32 plot_points = 3;
+
+  string id = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message ListPreviewsServiceExecResponse {
+  repeated ListPreviewsServiceExecResponseElement configurations = 1;
+}

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package storyconfiguration.v1;
+
+import "google/protobuf/empty.proto";
+
+service BatchDeleteService {
+  rpc Exec(BatchDeleteServiceExecRequest) returns (google.protobuf.Empty) {}
+}
+
+message BatchDeleteServiceExecRequest {
+  // The ids of the configurations to delete.
+  repeated string ids = 1;
+  // Optional. If present, only configurations belonging to that creator will be deleted.
+  optional string creator_id = 2;
+}

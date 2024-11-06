@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package storyconfiguration.v1;
+
+message ConfigurationBeat {
+  optional string beat_id = 1;
+
+  string beat_name = 2;
+  string beat_prompt = 3;
+}
+
+message ConfigurationPlotPoint {
+  optional string plot_point_id = 1;
+
+  string plot_point_name = 2;
+  string plot_point_prompt = 3;
+
+  repeated ConfigurationBeat beats = 4;
+}
+
+message Configuration {
+  string name = 1;
+
+  repeated ConfigurationPlotPoint plot_points = 2;
+
+  string creator_id = 3;
+}

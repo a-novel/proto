@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package storyconfiguration.v1;
+
+import "common/v1/pagination.proto";
+
+service SearchService {
+  rpc Exec(SearchServiceExecRequest) returns (SearchServiceExecResponse) {}
+}
+
+enum SortConfigurations {
+  SORT_CONFIGURATIONS_UNSPECIFIED = 0;
+  SORT_CONFIGURATIONS_BY_NAME = 1;
+  SORT_CONFIGURATIONS_BY_CREATED_AT = 2;
+  SORT_CONFIGURATIONS_BY_UPDATED_AT = 3;
+}
+
+message SearchServiceExecRequest {
+  // Pagination parameters for the search.
+  common.v1.Pagination pagination = 1;
+  // Sort the configurations.
+  SortConfigurations order_by = 3;
+  // The direction of the sorting.
+  common.v1.SortDirection order_direction = 4;
+  // Filter by creator ids.
+  repeated string creator_ids = 5;
+}
+
+message SearchServiceExecResponse {
+  repeated string ids = 1;
+}

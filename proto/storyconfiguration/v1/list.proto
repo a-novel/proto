@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package storyconfiguration.v1;
+
+import "google/protobuf/timestamp.proto";
+import "storyconfiguration/v1/common.proto";
+
+service ListService {
+  rpc Exec(ListServiceExecRequest) returns (ListServiceExecResponse) {}
+}
+
+message ListServiceExecRequest {
+  // The id of the configuration to get.
+  string id = 1;
+}
+
+message ListServiceExecResponseElement {
+  Configuration configuration = 1;
+
+  string id = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+}
+
+message ListServiceExecResponse {
+  repeated ListServiceExecResponseElement configurations = 1;
+}

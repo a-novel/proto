@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package storyconfiguration.v1;
+
+import "google/protobuf/timestamp.proto";
+import "storyconfiguration/v1/common.proto";
+
+service GetService {
+  rpc Exec(GetServiceExecRequest) returns (GetServiceExecResponse) {}
+}
+
+message GetServiceExecRequest {
+  // The id of the configuration to get.
+  string id = 1;
+}
+
+message GetServiceExecResponse {
+  Configuration configuration = 1;
+
+  string id = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+}
